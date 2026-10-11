@@ -208,28 +208,30 @@ export function SizeGuide({
               <p className="mt-3 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-stone">
                 Measurements in inches · garment measured flat, doubled for chest/waist
               </p>
-              <table className="mt-6 w-full border-collapse text-sm">
-                <thead>
-                  <tr className="border-b border-ink/20">
-                    {headers.map((h) => (
-                      <th key={h} className="pb-2 text-left font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone">
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r) => (
-                    <tr key={r[0]} className="border-b border-line">
-                      {r.map((c, ci) => (
-                        <td key={ci} className={cn("py-2.5 tabular-nums", ci === 0 && "font-display text-lg")}>
-                          {c}
-                        </td>
+              <div className="mt-6 w-full overflow-x-auto">
+                <table className="min-w-full border-collapse text-sm">
+                  <thead>
+                    <tr className="border-b border-ink/20">
+                      {headers.map((h) => (
+                        <th key={h} className="pb-2 pr-3 text-left font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone whitespace-nowrap">
+                          {h}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {rows.map((r) => (
+                      <tr key={r[0]} className="border-b border-line">
+                        {r.map((c, ci) => (
+                          <td key={ci} className={cn("py-2.5 pr-3 tabular-nums whitespace-nowrap", ci === 0 && "font-display text-lg")}>
+                            {c}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <div className="mt-6 border-t border-line pt-4">
                 <p className="label">How to measure</p>
                 <ul className="mt-2 space-y-1.5 text-sm text-ink2">

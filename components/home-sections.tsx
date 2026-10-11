@@ -23,9 +23,22 @@ export function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
   return (
-    <section ref={ref} className="relative min-h-[92vh] overflow-hidden pt-[104px]">
-      <Container className="grid min-h-[calc(92vh-104px)] items-center gap-10 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-0">
-        <div className="order-1 lg:order-1">
+    <section ref={ref} className="relative min-h-[85vh] sm:min-h-[90vh] overflow-hidden pt-[86px] sm:pt-[104px] flex items-center">
+      {/* Mobile background image with gradient readability overlay */}
+      <div className="absolute inset-0 z-0 lg:hidden pointer-events-none overflow-hidden">
+        <Image
+          src="/images/hero-01.jpg"
+          alt="Zero7 streetwear editorial background"
+          fill
+          priority
+          sizes="100vw"
+          className="img-grade object-cover opacity-35 sm:opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/85 to-paper/60" />
+      </div>
+
+      <Container className="relative z-10 grid min-h-[calc(85vh-86px)] sm:min-h-[calc(90vh-104px)] items-center gap-8 py-8 sm:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-0">
+        <div className="order-1 flex flex-col justify-center">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -35,21 +48,21 @@ export function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Drop 03 · Live now
           </motion.span>
 
-          <h1 className="mt-6 flex flex-wrap items-baseline gap-x-4 font-display text-[3rem] leading-[0.95] tracking-tight sm:text-7xl lg:text-[5.6rem]">
+          <h1 className="mt-4 sm:mt-6 flex flex-wrap items-baseline gap-x-3 sm:gap-x-4 font-display text-[2.65rem] sm:text-7xl lg:text-[5.6rem] leading-[0.95] tracking-tight">
             {["Street", "wear", "from"].map((w, i) => (
               <motion.span
                 key={w}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 {w}
               </motion.span>
             ))}
             <motion.span
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.8, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
               className="font-display italic text-accent"
             >
               Nagpur.
@@ -59,8 +72,8 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.5 }}
-            className="mt-7 max-w-md text-[1.02rem] leading-relaxed text-ink2"
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="mt-4 sm:mt-7 max-w-md text-[0.95rem] sm:text-[1.02rem] leading-relaxed text-ink2"
           >
             {site.intro}
           </motion.p>
@@ -68,12 +81,12 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.62 }}
-            className="mt-9 flex flex-wrap items-center gap-4"
+            transition={{ duration: 0.8, delay: 0.55 }}
+            className="mt-6 sm:mt-9 flex flex-wrap items-center gap-3 sm:gap-4"
           >
             <Link
               href="/shop"
-              className="group inline-flex items-center gap-3 bg-ink px-8 py-4 font-sans text-[0.72rem] font-medium uppercase tracking-[0.2em] text-paper transition-colors hover:bg-accent"
+              className="group inline-flex items-center gap-3 bg-ink px-6 sm:px-8 py-3.5 sm:py-4 font-sans text-[0.7rem] sm:text-[0.72rem] font-medium uppercase tracking-[0.2em] text-paper transition-colors hover:bg-accent shadow-sm"
             >
               Shop the drop
               <span className="transition-transform duration-500 ease-smooth group-hover:translate-x-1">→</span>
@@ -81,21 +94,22 @@ export function Hero() {
             <ArrowLink href="/looks">Shop the look</ArrowLink>
           </motion.div>
 
-          <div className="mt-12 flex flex-wrap gap-x-8 gap-y-2 border-t border-line pt-5 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-stone">
+          <div className="mt-8 sm:mt-12 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-2 border-t border-line/80 pt-4 sm:pt-5 font-mono text-[0.56rem] sm:text-[0.58rem] uppercase tracking-[0.16em] text-stone">
             <span>{site.shipping}</span>
             <span>{site.payments}</span>
             <span>Made in India</span>
           </div>
         </div>
 
+        {/* Desktop dedicated editorial image card */}
         <motion.div
           style={{ y, scale }}
           initial={{ opacity: 0, clipPath: "inset(12% 0 0 0)" }}
           animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="order-2 lg:order-2"
+          className="order-2 hidden lg:block"
         >
-          <div className="relative aspect-square w-full overflow-hidden bg-paper2 sm:aspect-[4/5] lg:aspect-[4/5.4]">
+          <div className="relative aspect-square w-full overflow-hidden bg-paper2 sm:aspect-[4/5] lg:aspect-[4/5.4] shadow-sm">
             <Image
               src="/images/hero-01.jpg"
               alt="Zero7 streetwear editorial"

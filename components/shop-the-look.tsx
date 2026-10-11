@@ -44,7 +44,10 @@ export function LookSection({ look, index }: { look: Look; index: number }) {
       <div className="mx-auto grid w-full max-w-shell gap-10 px-5 sm:px-8 lg:grid-cols-[1.25fr_0.85fr] lg:gap-16 lg:px-12">
         {/* Image + hotspots */}
         <div className={cn(flip && "lg:order-2")}>
-          <div className="relative aspect-[2/3] w-full overflow-hidden bg-paper2">
+          <div
+            className="relative aspect-[2/3] w-full overflow-hidden bg-paper2"
+            onClick={() => setActive(null)}
+          >
             <Image
               src={look.image}
               alt={`${look.title} — shop the look`}
@@ -59,7 +62,10 @@ export function LookSection({ look, index }: { look: Look; index: number }) {
                 key={it.slug}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                onClick={() => setActive((a) => (a === i ? null : i))}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActive(i);
+                }}
                 style={{ left: `${it.x}%`, top: `${it.y}%` }}
                 className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
                 aria-label={`${it.garment}: ${it.product.name}`}
@@ -79,7 +85,7 @@ export function LookSection({ look, index }: { look: Look; index: number }) {
                         : "border-ink/20 bg-paper/90 text-ink"
                     )}
                   >
-                    {i + 1}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
                 </span>
               </button>
@@ -94,6 +100,7 @@ export function LookSection({ look, index }: { look: Look; index: number }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 12 }}
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={(e) => e.stopPropagation()}
                   className="absolute inset-x-3 bottom-3 z-20 flex items-center gap-3 bg-paper/95 p-3 backdrop-blur-md sm:inset-x-4 sm:bottom-4"
                 >
                   <Link
@@ -153,62 +160,83 @@ export function LookSection({ look, index }: { look: Look; index: number }) {
             {items.map((it, i) => (
               <li
                 key={it.slug}
-                className="flex items-center gap-4 border-b border-line py-4"
+                className={cn(
+                  "flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 border-b border-line py-3.5 sm:py-4 transition-colors",
+                  active === i ? "bg-accent/[0.06]" : "hover:bg-ink/[0.03]"
+                )}
               >
-                <span className="font-mono text-[0.6rem] text-stone">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <Link
-                  href={`/product/${it.product.slug}`}
-                  className="relative h-16 w-14 shrink-0 overflow-hidden bg-paper2"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={it.product.images[0]}
-                    alt={it.product.name}
-                    className="h-full w-full object-cover"
-                  />
-                </Link>
-                <div className="min-w-0 flex-1">
-                  <span className="label">{it.garment}</span>
+                <div className="flex items-center gap-3 min-w-0 flex-1 sm:flex-initial">
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    onMouseEnter={() => setActive(i)}
+                    aria-pressed={active === i}
+                    aria-label={`Highlight ${it.product.name}`}
+                    className={cn(
+                      "font-mono text-[0.6rem] tabular-nums transition-colors",
+                      active === i ? "text-accent" : "text-stone hover:text-ink"
+                    )}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </button>
                   <Link
                     href={`/product/${it.product.slug}`}
-                    className="block truncate font-sans text-sm font-medium"
+                    className={cn(
+                      "relative h-14 w-12 sm:h-16 sm:w-14 shrink-0 overflow-hidden bg-paper2 transition-all",
+                      active === i && "outline outline-1 outline-offset-2 outline-accent"
+                    )}
                   >
-                    {it.product.name}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={it.product.images[0]}
+                      alt={it.product.name}
+                      className="h-full w-full object-cover"
+                    />
                   </Link>
+                  <div className="min-w-0 flex-1">
+                    <span className="label text-[0.6rem]">{it.garment}</span>
+                    <Link
+                      href={`/product/${it.product.slug}`}
+                      className="block truncate font-sans text-xs sm:text-sm font-medium"
+                    >
+                      {it.product.name}
+                    </Link>
+                  </div>
                 </div>
-                <span className="shrink-0 text-sm tabular-nums">{inr(it.product.price)}</span>
-                <select
-                  value={sizeOf(it.product)}
-                  onChange={(e) =>
-                    setSizes((s) => ({ ...s, [it.product.slug]: e.target.value }))
-                  }
-                  aria-label={`Size for ${it.product.name}`}
-                  className="shrink-0 border border-line bg-transparent px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] outline-none focus:border-ink"
-                >
-                  {it.product.sizes.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  onClick={() =>
-                    add({
-                      id: it.product.id,
-                      slug: it.product.slug,
-                      name: it.product.name,
-                      price: it.product.price,
-                      image: it.product.images[0],
-                      size: sizeOf(it.product),
-                      color: it.product.colors[0].name,
-                    })
-                  }
-                  className="shrink-0 border border-ink px-3 py-1.5 font-sans text-[0.6rem] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-paper"
-                >
-                  Add
-                </button>
+
+                <div className="flex items-center justify-end gap-2 sm:gap-3 w-full sm:w-auto mt-1 sm:mt-0">
+                  <span className="shrink-0 text-xs sm:text-sm tabular-nums">{inr(it.product.price)}</span>
+                  <select
+                    value={sizeOf(it.product)}
+                    onChange={(e) =>
+                      setSizes((s) => ({ ...s, [it.product.slug]: e.target.value }))
+                    }
+                    aria-label={`Size for ${it.product.name}`}
+                    className="shrink-0 border border-line bg-transparent px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] outline-none focus:border-ink"
+                  >
+                    {it.product.sizes.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() =>
+                      add({
+                        id: it.product.id,
+                        slug: it.product.slug,
+                        name: it.product.name,
+                        price: it.product.price,
+                        image: it.product.images[0],
+                        size: sizeOf(it.product),
+                        color: it.product.colors[0].name,
+                      })
+                    }
+                    className="shrink-0 border border-ink px-3 py-1.5 font-sans text-[0.6rem] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-paper"
+                  >
+                    Add
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

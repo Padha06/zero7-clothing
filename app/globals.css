@@ -10,11 +10,14 @@
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
   background: var(--paper);
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -22,6 +25,15 @@ body {
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Prevent iOS auto-zoom on form inputs by ensuring at least 16px font-size */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
 ::selection {

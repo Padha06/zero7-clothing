@@ -135,15 +135,15 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="border-b border-line pb-12 pt-40 sm:pb-16 sm:pt-48">
+    <section className="border-b border-line pb-8 pt-28 sm:pb-16 sm:pt-44">
       <Container>
         <Kicker>{kicker}</Kicker>
-        <div className="mt-5 grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
-          <h1 className="font-display text-5xl leading-[0.94] tracking-tight sm:text-6xl lg:text-7xl">
+        <div className="mt-4 sm:mt-5 grid gap-4 sm:gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl leading-[0.96] tracking-tight">
             {title}
           </h1>
           {intro && (
-            <p className="max-w-md text-[0.98rem] leading-relaxed text-ink2 lg:pb-2">{intro}</p>
+            <p className="max-w-md text-[0.92rem] sm:text-[0.98rem] leading-relaxed text-ink2 lg:pb-2">{intro}</p>
           )}
         </div>
         {children}
