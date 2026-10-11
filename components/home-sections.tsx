@@ -23,8 +23,8 @@ export function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
   return (
-    <section ref={ref} className="relative min-h-[85vh] sm:min-h-[90vh] overflow-hidden pt-[86px] sm:pt-[104px] flex items-center">
-      {/* Mobile background image with gradient readability overlay */}
+    <section ref={ref} className="relative overflow-hidden pt-[76px] sm:pt-[104px] lg:min-h-[92vh] lg:flex lg:items-center">
+      {/* Mobile background image: clearly visible, warm streetwear aesthetic without excessive fade/blur */}
       <div className="absolute inset-0 z-0 lg:hidden pointer-events-none overflow-hidden">
         <Image
           src="/images/hero-01.jpg"
@@ -32,12 +32,13 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="img-grade object-cover opacity-35 sm:opacity-40"
+          className="img-grade object-cover object-[center_20%] opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/85 to-paper/60" />
+        {/* Soft, readable gradient overlay that lets the model & outfit show clearly */}
+        <div className="absolute inset-0 bg-gradient-to-b from-paper/85 via-paper/55 to-paper/95" />
       </div>
 
-      <Container className="relative z-10 grid min-h-[calc(85vh-86px)] sm:min-h-[calc(90vh-104px)] items-center gap-8 py-8 sm:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-0">
+      <Container className="relative z-10 grid items-center gap-6 py-6 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-0 lg:min-h-[calc(92vh-104px)]">
         <div className="order-1 flex flex-col justify-center">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
@@ -48,11 +49,11 @@ export function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Drop 03 · Live now
           </motion.span>
 
-          <h1 className="mt-4 sm:mt-6 flex flex-wrap items-baseline gap-x-3 sm:gap-x-4 font-display text-[2.65rem] sm:text-7xl lg:text-[5.6rem] leading-[0.95] tracking-tight">
+          <h1 className="mt-3 sm:mt-6 flex flex-wrap items-baseline gap-x-3 sm:gap-x-4 font-display text-[2.75rem] sm:text-7xl lg:text-[5.6rem] leading-[0.95] tracking-tight drop-shadow-sm">
             {["Street", "wear", "from"].map((w, i) => (
               <motion.span
                 key={w}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
@@ -60,7 +61,7 @@ export function Hero() {
               </motion.span>
             ))}
             <motion.span
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
               className="font-display italic text-accent"
@@ -73,7 +74,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="mt-4 sm:mt-7 max-w-md text-[0.95rem] sm:text-[1.02rem] leading-relaxed text-ink2"
+            className="mt-3.5 sm:mt-7 max-w-md text-[0.95rem] sm:text-[1.02rem] leading-relaxed text-ink font-medium sm:font-normal"
           >
             {site.intro}
           </motion.p>
@@ -82,11 +83,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.55 }}
-            className="mt-6 sm:mt-9 flex flex-wrap items-center gap-3 sm:gap-4"
+            className="mt-5 sm:mt-9 flex flex-wrap items-center gap-3 sm:gap-4"
           >
             <Link
               href="/shop"
-              className="group inline-flex items-center gap-3 bg-ink px-6 sm:px-8 py-3.5 sm:py-4 font-sans text-[0.7rem] sm:text-[0.72rem] font-medium uppercase tracking-[0.2em] text-paper transition-colors hover:bg-accent shadow-sm"
+              className="group inline-flex items-center gap-3 bg-ink px-6 sm:px-8 py-3.5 sm:py-4 font-sans text-[0.7rem] sm:text-[0.72rem] font-medium uppercase tracking-[0.2em] text-paper transition-colors hover:bg-accent shadow"
             >
               Shop the drop
               <span className="transition-transform duration-500 ease-smooth group-hover:translate-x-1">→</span>
@@ -94,14 +95,14 @@ export function Hero() {
             <ArrowLink href="/looks">Shop the look</ArrowLink>
           </motion.div>
 
-          <div className="mt-8 sm:mt-12 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-2 border-t border-line/80 pt-4 sm:pt-5 font-mono text-[0.56rem] sm:text-[0.58rem] uppercase tracking-[0.16em] text-stone">
+          <div className="mt-6 sm:mt-12 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-2 border-t border-line/70 pt-3.5 sm:pt-5 font-mono text-[0.56rem] sm:text-[0.58rem] uppercase tracking-[0.16em] text-stone">
             <span>{site.shipping}</span>
             <span>{site.payments}</span>
             <span>Made in India</span>
           </div>
         </div>
 
-        {/* Desktop dedicated editorial image card */}
+        {/* Desktop dedicated editorial image card - untouched on desktop */}
         <motion.div
           style={{ y, scale }}
           initial={{ opacity: 0, clipPath: "inset(12% 0 0 0)" }}
@@ -133,7 +134,7 @@ export function Hero() {
 /* --------------------------- MARQUEE --------------------------- */
 export function MarqueeStrip() {
   return (
-    <div className="border-y border-line bg-paper2 py-3.5 text-ink">
+    <div className="border-y border-line bg-paper2 py-2 sm:py-3.5 text-ink">
       <Ticker items={marquee} />
     </div>
   );
@@ -142,7 +143,7 @@ export function MarqueeStrip() {
 /* ------------------------- CATEGORY RAIL ------------------------ */
 export function CategoryRail() {
   return (
-    <section className="cv-auto py-20 sm:py-28">
+    <section className="cv-auto py-10 sm:py-28">
       <Container>
         <div className="flex items-end justify-between">
           <div>
@@ -156,7 +157,7 @@ export function CategoryRail() {
           </ArrowLink>
         </div>
 
-        <Stagger className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+        <Stagger className="mt-6 sm:mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
           {categories.map((c, i) => (
             <StaggerItem key={c.id}>
               <Link href={c.href} className="group block">
