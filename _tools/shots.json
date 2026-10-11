@@ -1,0 +1,6 @@
+[
+  { "name": "pin-1", "url": "/looks", "w": 1440, "h": 1000, "scrollY": 760, "clickSel": "button[aria-label^=\"Jeans\"]" },
+  { "name": "pin-2", "url": "/looks", "w": 1440, "h": 1000, "scrollY": 1850 },
+  { "name": "pin-3", "url": "/looks", "w": 1440, "h": 1000, "scrollY": 2950 },
+  { "name": "home-lb", "url": "/", "w": 1440, "h": 900, "scrollY": 5200 }
+]
